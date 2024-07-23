@@ -1,11 +1,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -16,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
-import frc.robot.subsystems.Mechanisms.Intake;
 import frc.robot.subsystems.swerve.Swerve;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -41,15 +38,7 @@ public class RobotContainer {
 
     private final JoystickButton dampen = new JoystickButton(driver, XboxController.Button.kB.value);
 
-    private final JoystickButton xAim = new JoystickButton(driver, XboxController.Button.kX.value);
-
-    private final JoystickButton disablePickup = new JoystickButton(driver, XboxController.Button.kY.value);
-
     private final JoystickButton botOriented = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-
-    private final JoystickButton pickup = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-
-    private final JoystickButton reversePickup = new JoystickButton(driver, XboxController.Button.kA.value);
 
     private final POVButton up = new POVButton(driver, 90);
     private final POVButton down = new POVButton(driver, 270);
@@ -58,10 +47,6 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-    private final Intake s_Intake = new Intake();
-
-    /* LEDs */
-    PWM greenLED = new PWM(0);
 
     // Auton Selector
     private SendableChooser<Command> autonSelector = new SendableChooser<Command>();
@@ -84,10 +69,6 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
 
-        //Register named commands
-        NamedCommands.registerCommand("IntakeOn", s_Intake.On());
-        NamedCommands.registerCommand("IntakeOff", s_Intake.Off());
-
         // Create Pathplanner Autos
         PathPlannerPath DBAP = PathPlannerPath.fromChoreoTrajectory("NewPath");
         Command DBAPCommand = AutoBuilder.followPath(DBAP);
@@ -100,9 +81,6 @@ public class RobotContainer {
         autonSelector.addOption("Drive Back and Pick Up", DBAPCommand);
         autonSelector.addOption("Test", TestCommand);
         SmartDashboard.putData("Auton Selector", autonSelector);
-
-        //LEDs
-        greenLED.setAlwaysHighMode();
     }
 
     /**
@@ -135,11 +113,6 @@ public class RobotContainer {
             );
         
         //xAim.onTrue(new XAim(s_Swerve)); 
-
-        pickup.onTrue(s_Intake.Intake());
-        disablePickup.onTrue(s_Intake.Off());
-        reversePickup.onTrue(s_Intake.Reverse());
-        reversePickup.onFalse(s_Intake.Off());
 
     }
 
