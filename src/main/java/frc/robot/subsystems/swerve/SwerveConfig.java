@@ -25,13 +25,10 @@ public class SwerveConfig
 
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
-    public static final COTSFalconSwerveConstants chosenModule =  
-        COTSFalconSwerveConstants.SDSMK4(COTSFalconSwerveConstants.driveGearRatios.SDSMK4_L3);
-
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(19); 
     public static final double wheelBase = Units.inchesToMeters(19); 
-    public static final double wheelCircumference = chosenModule.wheelCircumference;
+    public static final double wheelCircumference = 0.1016;
 
 
     /* Swerve Kinematics 
@@ -44,8 +41,8 @@ public class SwerveConfig
 
 
     /* Module Gear Ratios */
-    public static final double driveGearRatio = chosenModule.driveGearRatio;
-    public static final double angleGearRatio = chosenModule.angleGearRatio;
+    public static final double driveGearRatio = 7.13;
+    public static final double angleGearRatio = 13.71;
 
     // encoder setup
     // meters per rotation
@@ -56,11 +53,11 @@ public class SwerveConfig
 
     
     /* Motor Inverts */
-    public static final boolean angleMotorInvert = chosenModule.angleMotorInvert;
-    public static final boolean driveMotorInvert = chosenModule.driveMotorInvert;
+    public static final boolean angleMotorInvert = false;
+    public static final boolean driveMotorInvert = false;
 
     /* Angle Encoder Invert */
-    public static final boolean canCoderInvert = chosenModule.canCoderInvert;
+    public static final boolean canCoderInvert = false;
 
     /* Swerve Current Limiting */
     public static final int angleContinuousCurrentLimit = 20;
